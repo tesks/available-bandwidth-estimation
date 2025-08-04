@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from pathlib import Path
 
 # A packet sending and logging with Scapy
 script_content = '''\
@@ -22,14 +23,14 @@ def build_packet(size):
     pkt = IP(dst=DEST_IP)/UDP(dport=DEST_PORT)/payload
     return pkt
 
-# Start sniffing in background
+# Start background sniffing
 received_times = {}
 
 def pkt_callback(pkt):
     if UDP in pkt and pkt[UDP].dport == DEST_PORT:
         recv_time = time.time()
         payload_len = len(pkt[Raw].load)
-        received_times[payload_len + 28] = recv_time  # account for headers
+        received_times[payload_len + 28] = recv_time  # 28 bytes for headers
 
 sniffer = AsyncSniffer(iface=IFACE, prn=pkt_callback)
 sniffer.start()
@@ -45,7 +46,7 @@ with open(CSV_FILE, mode='w', newline='') as file:
             pkt = build_packet(size)
             send_time = time.time()
             send(pkt, iface=IFACE, verbose=0)
-            time.sleep(0.1)  # slight delay between packets
+            time.sleep(0.1)  # small delay between packets
 
             # Wait for the response
             time.sleep(0.2)
@@ -62,7 +63,7 @@ sniffer.stop()
 '''
 
 # Store the script
-script_path = Path("/mnt/data/vps_packet_delay_logger.py")
+script_path = Path("local_mnt/data/vps_packet_delay_logger.py")
 with open(script_path, "w") as f:
     f.write(script_content)
 
