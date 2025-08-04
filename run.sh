@@ -12,5 +12,6 @@ source .venv/bin/activate
 pip install -r requirements.txt
 
 # Run the main script
+python main_data_collection.py
 python main_vps_packet_delay_logger.py
 
