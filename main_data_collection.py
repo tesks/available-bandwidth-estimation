@@ -63,8 +63,7 @@ sniffer.stop()
 '''
 
 # Store the script
-script_path = Path("local_mnt/data/vps_packet_delay_logger.py")
-with open(script_path, "w") as f:
+script_path = Path("main_vps_packet_delay_logger.py")
     f.write(script_content)
 
 script_path.as_posix()
