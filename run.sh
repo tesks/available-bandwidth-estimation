@@ -9,7 +9,7 @@ fi
 source .venv/bin/activate
 
 # Install any missing python dependencies
-pip install requirements.txt
+pip install -r requirements.txt
 
 # Run the main script
 python main_vps_packet_delay_logger.py
