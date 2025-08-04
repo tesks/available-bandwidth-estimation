@@ -47,7 +47,7 @@ with open(CSV_FILE, mode='w', newline='') as file:
             send(pkt, iface=IFACE, verbose=0)
             time.sleep(0.1)  # slight delay between packets
 
-            # Wait for the corresponding response
+            # Wait for the response
             time.sleep(0.2)
             recv_time = received_times.get(size)
             if recv_time:
@@ -61,7 +61,7 @@ with open(CSV_FILE, mode='w', newline='') as file:
 sniffer.stop()
 '''
 
-# Save the script
+# Store the script
 script_path = Path("/mnt/data/vps_packet_delay_logger.py")
 with open(script_path, "w") as f:
     f.write(script_content)
