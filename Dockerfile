@@ -4,7 +4,7 @@ FROM python:3.10-slim
 RUN apt-get update && apt-get install -y\
     tcpdump\
     iproute2 \
-    ipputil-ping \
+    iputils-ping \
     tshark \
     net-tools \
     gcc \
@@ -18,4 +18,4 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt 
 
 # Copy over the packet probe scripts into the container
-COPY . . /app/
+COPY . /app/
