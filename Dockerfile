@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y\
     net-tools \
     gcc \
     libpcap-dev \
+    vim \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory

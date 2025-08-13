@@ -28,8 +28,16 @@ def pkt_callback(pkt):
         received_times[payload_len + 28] = recv_time  # 28 bytes for headers
 
 sniffer = AsyncSniffer(iface=IFACE, prn=pkt_callback)
-sniffer.start()
-time.sleep(2)
+try:
+    sniffer.start()
+    print(f"Sniffer started on interface {IFACE}")
+    time.sleep(2)
+except Exception as e:
+    print(f"Failed to start sniffer on {IFACE}: {e}")
+    print("Available interfaces:")
+    from scapy.arch import get_if_list
+    print(get_if_list())
+    exit(1)
 
 # Send packets and log timestamps
 with open(CSV_FILE, mode='w', newline='') as file:
@@ -54,4 +62,8 @@ with open(CSV_FILE, mode='w', newline='') as file:
             writer.writerow([size, send_time, recv_time, delay])
             print(f"Sent packet size {size}B: delay = {delay}")
 
-sniffer.stop()
+# Stop sniffer safely
+if sniffer.running:
+    sniffer.stop()
+else:
+    print("Sniffer was not running")
